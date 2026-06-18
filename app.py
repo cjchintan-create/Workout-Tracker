@@ -31,7 +31,12 @@ GSHEET_URL = "https://docs.google.com/spreadsheets/d/1iROHvJpaXnjYDDYQ3OAF1ruOMY
 def save_to_google_sheets(data_list):
     try:
         # Connect using local python system drive credentials
-        gc = gspread.oauth()
+       # Pull the service account keys securely from Streamlit's Vault
+import streamlit as st
+
+gc = gspread.service_account_from_dict(st.secrets["gspread"]["credentials"])
+sh = gc.open_by_url(GSHEET_URL)
+worksheet = sh.get_worksheet(0)
         sh = gc.open_by_url(GSHEET_URL)
         worksheet = sh.get_worksheet(0)
         
