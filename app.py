@@ -28,25 +28,29 @@ EXCEL_FILE = "Aesthetic_Workout_Blueprint.xlsx"
 GSHEET_URL = "https://docs.google.com/spreadsheets/d/1iROHvJpaXnjYDDYQ3OAF1ruOMY4K16N0spz3cwnVRfA/edit?gid=0#gid=0"
 
 # --- GOOGLE SHEETS AUTHENTICATION ---
+# --- GOOGLE SHEETS AUTHENTICATION ---
 def save_to_google_sheets(data_list):
     try:
-        # Connect using local python system drive credentials
-       # Pull the service account keys securely from Streamlit's Vault
-import streamlit as st
-
-gc = gspread.service_account_from_dict(st.secrets["gspread"]["credentials"])
-sh = gc.open_by_url(GSHEET_URL)
-worksheet = sh.get_worksheet(0)
+        # Pull the service account keys securely from Streamlit's Vault
+        import streamlit as st
+        gc = gspread.service_account_from_dict(st.secrets["gspread"]["credentials"])
         sh = gc.open_by_url(GSHEET_URL)
         worksheet = sh.get_worksheet(0)
         
         # Append rows
         for row in data_list:
             worksheet.append_row([
-                row["Date"], row["Exercise Name"], row["Target Area Focus"],
-                row["Set Number"], row["Weight Logged (kg)"], row["Reps Executed"]
+                row["Date"], 
+                row["Exercise Name"], 
+                row["Target Area Focus"], 
+                row["Set Number"], 
+                row["Weight Logged (kg)"], 
+                row["Reps Executed"]
             ])
         return True
+    except Exception as e:
+        st.error(f"Google Sheets Error: {e}")
+        return False
     except Exception as e:
         st.error(f"Google Sheets Error: {e}")
         return False
