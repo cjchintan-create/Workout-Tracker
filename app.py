@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 import os
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+
 
 # App Configuration
 st.set_page_config(page_title="Aesthetic Tracker", page_icon="💪", layout="centered")
