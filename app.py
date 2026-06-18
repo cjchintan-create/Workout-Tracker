@@ -31,28 +31,20 @@ GSHEET_URL = "https://docs.google.com/spreadsheets/d/1iROHvJpaXnjYDDYQ3OAF1ruOMY
 # --- GOOGLE SHEETS AUTHENTICATION ---
 def save_to_google_sheets(data_list):
     try:
-        # Pull the service account keys securely and convert them from text to a dictionary
-        import streamlit as st
+        import requests
         import json
         
-        creds_dict = json.loads(st.secrets["gspread"]["credentials"])
-        gc = gspread.service_account_from_dict(creds_dict)
-        sh = gc.open_by_url(GSHEET_URL)
-        worksheet = sh.get_worksheet(0)
+        # 🛠️ PASTE YOUR COPIED GOOGLE WEB APP URL HERE
+        WEB_APP_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE"
         
-        # Append rows
-        for row in data_list:
-            worksheet.append_row([
-                row["Date"], 
-                row["Exercise Name"], 
-                row["Target Area Focus"], 
-                row["Set Number"], 
-                row["Weight Logged (kg)"], 
-                row["Reps Executed"] 
-            ])
-        return True
+        response = requests.post(WEB_APP_URL, json=data_list)
+        if response.status_code == 200 and response.json().get("status") == "success":
+            return True
+        else:
+            st.error(f"Sheet Web App Error: {response.text}")
+            return False
     except Exception as e:
-        st.error(f"Google Sheets Error: {e}")
+        st.error(f"Connection Error: {e}")
         return False
 
 # --- LOAD EXCEL TEMPLATE ---
