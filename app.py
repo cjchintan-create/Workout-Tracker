@@ -25,7 +25,7 @@ st.title("💪 Aesthetic Cloud Tracker")
 EXCEL_FILE = "Aesthetic_Workout_Blueprint.xlsx"
 
 # 🛠️ PASTE YOUR GOOGLE SHEET URL HERE
-GSHEET_URL = "https://docs.google.com/spreadsheets/d/1iROHvJpaXnjYDDYQ3OAF1ruOMY4K16N0spz3cwnVRfA/edit?gid=0#gid=0"
+GSHEET_URL = "https://docs.google.com/spreadsheets/d/1iROHvJpaXnjYDDYQ3OAF1ruOMY4K16N0spz3cwnVRfA/edit?gid=0#gid=0
 
 # --- GOOGLE SHEETS AUTHENTICATION ---
 # --- GOOGLE SHEETS AUTHENTICATION ---
