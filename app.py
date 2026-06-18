@@ -31,9 +31,12 @@ GSHEET_URL = "https://docs.google.com/spreadsheets/d/1iROHvJpaXnjYDDYQ3OAF1ruOMY
 # --- GOOGLE SHEETS AUTHENTICATION ---
 def save_to_google_sheets(data_list):
     try:
-       # Pull the service account keys securely from Streamlit's Vault
+        # Pull the service account keys securely and convert them from text to a dictionary
         import streamlit as st
-        gc = gspread.service_account_from_dict(st.secrets["gspread"]["credentials"])
+        import json
+        
+        creds_dict = json.loads(st.secrets["gspread"]["credentials"])
+        gc = gspread.service_account_from_dict(creds_dict)
         sh = gc.open_by_url(GSHEET_URL)
         worksheet = sh.get_worksheet(0)
         
@@ -45,12 +48,9 @@ def save_to_google_sheets(data_list):
                 row["Target Area Focus"], 
                 row["Set Number"], 
                 row["Weight Logged (kg)"], 
-                row["Reps Executed"]
+                row["Reps Executed"] 
             ])
         return True
-    except Exception as e:
-        st.error(f"Google Sheets Error: {e}")
-        return False
     except Exception as e:
         st.error(f"Google Sheets Error: {e}")
         return False
